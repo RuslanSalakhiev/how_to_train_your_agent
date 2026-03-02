@@ -46,21 +46,21 @@
 
 ---
 
-## 🚀 Как начать
-1.  Сделайте `git clone`.
-2.  Создайте свою ветку: `git checkout -b yourname-agentname_version`.
-3.  Разверните окружение:
+## 🚀 Быстрый старт (через Colima / Docker)
 
-Для работы используйте **Colima** (Mac) или **WSL2** (Windows). 
-Выберите ОДИН инструмент, который вам нравится, и запустите его вместе с базой данных:
+Рекомендуется использовать **Colima** (Mac) или **WSL2** (Windows).
 
-| Инструмент | Фишка | Команда запуска | Порт |
-| :--- | :--- | :--- | :--- |
-| **Lightdash** | Идеально для dbt | `docker-compose --profile lightdash up -d` | `8080` |
-| **Evidence** | Markdown + SQL | `docker-compose --profile evidence up -d` | `3000` |
-| **Metabase** | Просто и быстро | `docker-compose --profile metabase up -d` | `3001` |
-| **Superset** | Мощный Open Source | `docker-compose --profile superset up -d` | `8088` |
-| **Grafana** | Для динамики | `docker-compose --profile grafana up -d` | `3002` |
+1. **Запустите движок** (для Mac): `colima start`
+2. **Клонируйте репозиторий и перейдите в свою ветку.**
+3. **Выберите и запустите стек** (база поднимется автоматически):
+
+| Инструмент | Команда запуска | Порт |
+| :--- | :--- | :--- |
+| **Lightdash** | `docker-compose --profile lightdash up -d` | `:8080` |
+| **Evidence** | `docker-compose --profile evidence up -d` | `:3000` |
+| **Metabase** | `docker-compose --profile metabase up -d` | `:3001` |
+| **Superset** | `docker-compose --profile superset up -d` | `:8088` |
+| **Grafana** | `docker-compose --profile grafana up -d` | `:3002` |
 | **Или добавьте свой** | |  |  |
 
 *Чтобы выключить всё и очистить ресурсы:* `docker-compose down --remove-orphans`
