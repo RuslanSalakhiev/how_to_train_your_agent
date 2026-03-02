@@ -1,0 +1,20 @@
+# Docker & OS
+.DS_Store
+*.log
+.env
+.docker/
+
+# Evidence.dev
+solutions/evidence/node_modules/
+solutions/evidence/.evidence/
+solutions/evidence/build/
+
+# dbt
+target/
+dbt_packages/
+logs/
+
+# Python (если кто-то будет использовать)
+__pycache__/
+*.pyc
+venv/
