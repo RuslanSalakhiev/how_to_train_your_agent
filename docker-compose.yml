@@ -1,0 +1,88 @@
+version: '3.8'
+
+services:
+  # --- ОБЩАЯ БАЗА ДАННЫХ ---
+  db:
+    image: postgres:15
+    container_name: challenge_db
+    environment:
+      POSTGRES_DB: analytics
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init-db:/docker-entrypoint-initdb.d
+
+  # --- 1. LIGHTDASH (BI-as-a-code + dbt) ---
+  # Запуск: docker-compose --profile lightdash up -d
+  lightdash:
+    image: lightdash/lightdash:latest
+    container_name: bi_lightdash
+    profiles: ["lightdash"]
+    environment:
+      LIGHTDASH_SECRET: secret_key_123
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: analytics
+      DB_USER: admin
+      DB_PASS: password123
+      DB_TYPE: postgres
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+  # --- 2. EVIDENCE (Markdown + SQL) ---
+  # Запуск: docker-compose --profile evidence up -d
+  evidence:
+    image: node:18-slim
+    container_name: bi_evidence
+    profiles: ["evidence"]
+    working_dir: /app
+    volumes:
+      - ./solutions/evidence:/app
+    ports:
+      - "3000:3000"
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    depends_on:
+      - db
+
+  # --- 3. APACHE SUPERSET (Enterprise BI) ---
+  # Запуск: docker-compose --profile superset up -d
+  superset:
+    image: apache/superset:latest
+    container_name: bi_superset
+    profiles: ["superset"]
+    environment:
+      SUPERSET_SECRET_KEY: "very_secret_key"
+    ports:
+      - "8088:8088"
+    depends_on:
+      - db
+
+  # --- 4. GRAFANA (Observability / Dashboards) ---
+  # Запуск: docker-compose --profile grafana up -d
+  grafana:
+    image: grafana/grafana:latest
+    container_name: bi_grafana
+    profiles: ["grafana"]
+    ports:
+      - "3002:3000"
+    depends_on:
+      - db
+
+  # --- 5. METABASE (User Friendly GUI) ---
+  # Запуск: docker-compose --profile metabase up -d
+  metabase:
+    image: metabase/metabase:latest
+    container_name: bi_metabase
+    profiles: ["metabase"]
+    ports:
+      - "3001:3000"
+    environment:
+      MB_DB_TYPE: postgres
+      MB_DB_DBNAME: analytics
+      MB_DB_HOST: db
+    depends_on:
+      - db
