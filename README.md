@@ -11,6 +11,12 @@
 * **Transformation:** dbt.
 * **BI Layer:** BI-as-a-code (Lightdash, Superset, Evidence, Rill и прочие).
 
+## 🤝 Как стать участником (Collaborator)
+Поскольку репозиторий публичный, для создания веток вам нужны права на запись:
+
+1. **Оставьте заявку:** Напишите свой GitHub-ник в **Issues** этого репозитория.
+2. **Примите приглашение:** GitHub пришлет уведомление на почту. Также его можно найти здесь: `https://github.com/ваш-логин/название-репозитория/invitations`.
+3. **Начинайте:** Только после принятия приглашения вы сможете сделать `git push` своей ветки.
 ---
 
 ## 🛠 Правила репозитория (Workflow)
@@ -56,8 +62,6 @@
 | **Superset** | Мощный Open Source | `docker-compose --profile superset up -d` | `8088` |
 | **Grafana** | Для динамики | `docker-compose --profile grafana up -d` | `3002` |
 | **Или добавьте свой** | |  |  |
-
-или добавьте свой
 
 *Чтобы выключить всё и очистить ресурсы:* `docker-compose down --remove-orphans`
 
